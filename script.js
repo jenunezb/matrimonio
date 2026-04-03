@@ -1,4 +1,24 @@
-﻿const weddingDate = new Date("2026-07-18T15:00:00-05:00");
+﻿const pageLoader = document.querySelector("#page-loader");
+
+function hidePageLoader() {
+  if (!pageLoader) {
+    document.body.classList.add("hero-ready");
+    return;
+  }
+
+  pageLoader.classList.add("is-hidden");
+  document.body.classList.remove("is-loading");
+  document.body.classList.add("hero-ready");
+
+  window.setTimeout(() => {
+    pageLoader.remove();
+  }, 750);
+}
+
+window.addEventListener("load", () => {
+  window.setTimeout(hidePageLoader, 850);
+});
+const weddingDate = new Date("2026-07-18T15:00:00-05:00");
 
 const fields = {
   days: document.querySelector('[data-unit="days"]'),
@@ -86,3 +106,5 @@ const revealObserver = new IntersectionObserver(
 );
 
 revealElements.forEach((element) => revealObserver.observe(element));
+
+
