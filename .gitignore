@@ -1,0 +1,5 @@
+﻿.codex-local-server.js
+.vercel
+node_modules
+Thumbs.db
+Desktop.ini
