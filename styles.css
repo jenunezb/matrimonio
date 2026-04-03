@@ -1,7 +1,7 @@
 ﻿:root {
   --bg: #f7f4ee;
-  --surface: rgba(255, 255, 255, 0.82);
-  --surface-strong: rgba(255, 255, 255, 0.94);
+  --surface: rgba(255, 255, 255, 0.58);
+  --surface-strong: rgba(255, 255, 255, 0.74);
   --text: #2d2a26;
   --muted: #6f6a61;
   --accent: #97a063;
@@ -92,11 +92,121 @@ body::after {
     radial-gradient(circle at 10% 90%, rgba(214, 187, 152, 0.12), transparent 10%);
 }
 
+.leaf-layer {
+  position: fixed;
+  inset: -18vh 0 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.leaf {
+  --leaf-size: 96px;
+  --leaf-duration: 17s;
+  --leaf-delay: 0s;
+  --leaf-opacity: 0.3;
+  position: absolute;
+  top: -22vh;
+  left: 0;
+  width: var(--leaf-size);
+  height: calc(var(--leaf-size) * 0.68);
+  opacity: var(--leaf-opacity);
+  filter: drop-shadow(0 10px 18px rgba(84, 74, 58, 0.08));
+  animation: leafFall var(--leaf-duration) linear infinite;
+  animation-delay: var(--leaf-delay);
+}
+
+.leaf::before,
+.leaf::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 100% 0 100% 0;
+  transform-origin: 50% 50%;
+}
+
+.leaf::before {
+  background: linear-gradient(145deg, rgba(176, 191, 133, 0.72), rgba(121, 139, 79, 0.52));
+  transform: rotate(-28deg);
+}
+
+.leaf::after {
+  inset: 18% 46% 12% 46%;
+  border-radius: 999px;
+  background: rgba(255, 246, 227, 0.45);
+  transform: rotate(8deg);
+}
+
+.leaf--1 {
+  left: 6%;
+  --leaf-size: 112px;
+  --leaf-duration: 18s;
+  --leaf-delay: -4s;
+  --leaf-opacity: 0.24;
+}
+
+.leaf--2 {
+  left: 18%;
+  --leaf-size: 84px;
+  --leaf-duration: 16s;
+  --leaf-delay: -10s;
+  --leaf-opacity: 0.28;
+}
+
+.leaf--3 {
+  left: 30%;
+  --leaf-size: 104px;
+  --leaf-duration: 19s;
+  --leaf-delay: -8s;
+  --leaf-opacity: 0.22;
+}
+
+.leaf--4 {
+  left: 43%;
+  --leaf-size: 92px;
+  --leaf-duration: 17s;
+  --leaf-delay: -13s;
+  --leaf-opacity: 0.25;
+}
+
+.leaf--5 {
+  left: 58%;
+  --leaf-size: 118px;
+  --leaf-duration: 20s;
+  --leaf-delay: -6s;
+  --leaf-opacity: 0.2;
+}
+
+.leaf--6 {
+  left: 70%;
+  --leaf-size: 88px;
+  --leaf-duration: 15s;
+  --leaf-delay: -12s;
+  --leaf-opacity: 0.26;
+}
+
+.leaf--7 {
+  left: 82%;
+  --leaf-size: 108px;
+  --leaf-duration: 18.5s;
+  --leaf-delay: -2s;
+  --leaf-opacity: 0.22;
+}
+
+.leaf--8 {
+  left: 92%;
+  --leaf-size: 80px;
+  --leaf-duration: 16.5s;
+  --leaf-delay: -15s;
+  --leaf-opacity: 0.24;
+}
+
 .page-shell {
   width: min(100%, 760px);
   margin: 0 auto;
   padding: 24px 16px 72px;
   position: relative;
+  z-index: 1;
 }
 
 .section {
@@ -813,6 +923,28 @@ body.hero-ready .hero-name {
   }
 }
 
+@keyframes leafFall {
+  0% {
+    transform: translate3d(-3vw, -20vh, 0) rotate(0deg);
+  }
+
+  25% {
+    transform: translate3d(2vw, 26vh, 0) rotate(84deg);
+  }
+
+  50% {
+    transform: translate3d(-2vw, 54vh, 0) rotate(168deg);
+  }
+
+  75% {
+    transform: translate3d(3vw, 82vh, 0) rotate(256deg);
+  }
+
+  100% {
+    transform: translate3d(-1vw, 122vh, 0) rotate(348deg);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation: none !important;
@@ -823,6 +955,10 @@ body.hero-ready .hero-name {
   .reveal {
     opacity: 1;
     transform: none;
+  }
+
+  .leaf-layer {
+    display: none;
   }
 }
 
@@ -904,6 +1040,22 @@ body.hero-ready .hero-name {
     transform: translateY(0) scale(1);
     filter: blur(0);
     text-shadow: 0 0 0 rgba(255, 255, 255, 0);
+  }
+}
+
+@media (max-width: 560px) {
+  .leaf-layer {
+    inset: -12vh 0 0;
+  }
+
+  .leaf {
+    --leaf-size: 78px;
+  }
+
+  .leaf--1,
+  .leaf--5,
+  .leaf--7 {
+    --leaf-size: 92px;
   }
 }
 
