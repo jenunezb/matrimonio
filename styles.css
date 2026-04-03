@@ -100,6 +100,87 @@ body::after {
   overflow: hidden;
 }
 
+.branch-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.branch {
+  position: absolute;
+  top: 10vh;
+  width: 180px;
+  height: 82vh;
+  opacity: 0.34;
+  filter: blur(0.15px) drop-shadow(0 10px 22px rgba(84, 74, 58, 0.08));
+}
+
+.branch::before,
+.branch::after {
+  content: "";
+  position: absolute;
+}
+
+.branch::before {
+  inset: 0;
+  border-radius: 120px;
+  background:
+    linear-gradient(112deg, transparent 0 42%, rgba(125, 105, 79, 0.12) 42.6%, rgba(125, 105, 79, 0.36) 45%, rgba(138, 158, 91, 0.28) 46.2%, transparent 49%),
+    radial-gradient(ellipse at 36% 12%, rgba(154, 172, 110, 0.28) 0 11%, transparent 12%),
+    radial-gradient(ellipse at 62% 22%, rgba(154, 172, 110, 0.22) 0 10%, transparent 11%),
+    radial-gradient(ellipse at 42% 34%, rgba(154, 172, 110, 0.24) 0 10%, transparent 11%),
+    radial-gradient(ellipse at 68% 44%, rgba(154, 172, 110, 0.22) 0 9%, transparent 10%),
+    radial-gradient(ellipse at 40% 58%, rgba(154, 172, 110, 0.23) 0 10%, transparent 11%),
+    radial-gradient(ellipse at 63% 72%, rgba(154, 172, 110, 0.2) 0 9%, transparent 10%);
+}
+
+.branch::after {
+  width: 120px;
+  height: 120px;
+  top: 10%;
+  border-radius: 100% 0 100% 0;
+  background:
+    radial-gradient(circle at 38% 38%, rgba(245, 238, 219, 0.34), transparent 24%),
+    linear-gradient(145deg, rgba(172, 188, 127, 0.36), rgba(123, 144, 80, 0.22));
+  box-shadow:
+    22px 48px 0 -26px rgba(159, 176, 116, 0.28),
+    44px 132px 0 -34px rgba(159, 176, 116, 0.22),
+    14px 244px 0 -30px rgba(159, 176, 116, 0.2),
+    36px 360px 0 -36px rgba(159, 176, 116, 0.18);
+}
+
+.branch--left {
+  left: -34px;
+  transform-origin: left top;
+  animation: branchSwayLeft 8.5s ease-in-out infinite;
+}
+
+.branch--left::before {
+  transform: scaleX(1);
+}
+
+.branch--left::after {
+  left: 26px;
+  transform: rotate(-14deg);
+}
+
+.branch--right {
+  right: -34px;
+  transform-origin: right top;
+  animation: branchSwayRight 9s ease-in-out infinite;
+}
+
+.branch--right::before {
+  transform: scaleX(-1);
+}
+
+.branch--right::after {
+  right: 26px;
+  transform: scaleX(-1) rotate(-14deg);
+}
+
 .leaf {
   --leaf-size: 96px;
   --leaf-duration: 17s;
@@ -945,6 +1026,26 @@ body.hero-ready .hero-name {
   }
 }
 
+@keyframes branchSwayLeft {
+  0%, 100% {
+    transform: rotate(-3deg) translateY(0);
+  }
+
+  50% {
+    transform: rotate(2deg) translateY(8px);
+  }
+}
+
+@keyframes branchSwayRight {
+  0%, 100% {
+    transform: rotate(3deg) translateY(0);
+  }
+
+  50% {
+    transform: rotate(-2deg) translateY(10px);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation: none !important;
@@ -958,6 +1059,10 @@ body.hero-ready .hero-name {
   }
 
   .leaf-layer {
+    display: none;
+  }
+
+  .branch-layer {
     display: none;
   }
 }
@@ -1045,17 +1150,39 @@ body.hero-ready .hero-name {
 
 @media (max-width: 560px) {
   .leaf-layer {
-    inset: -12vh 0 0;
+    inset: -10vh 0 0;
+  }
+
+  .branch {
+    width: 146px;
+    height: 68vh;
+    opacity: 0.34;
+  }
+
+  .branch--left {
+    left: -22px;
+  }
+
+  .branch--right {
+    right: -22px;
   }
 
   .leaf {
-    --leaf-size: 78px;
+    --leaf-size: 92px;
+    --leaf-opacity: 0.34;
   }
 
   .leaf--1,
   .leaf--5,
   .leaf--7 {
-    --leaf-size: 92px;
+    --leaf-size: 110px;
+  }
+
+  .leaf--2,
+  .leaf--4,
+  .leaf--6,
+  .leaf--8 {
+    --leaf-opacity: 0.3;
   }
 }
 
