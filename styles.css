@@ -410,6 +410,40 @@ body.hero-ready .hero-name {
   line-height: 1.35;
 }
 
+.hero-verse {
+  max-width: 32rem;
+  margin: 24px auto 0;
+  padding: 20px 22px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.52);
+  border: 1px solid rgba(151, 160, 99, 0.16);
+  box-shadow: 0 16px 30px rgba(84, 74, 58, 0.08);
+}
+
+.hero-verse-reference {
+  display: block;
+  margin-bottom: 12px;
+  font-family: "Cinzel", serif;
+  font-size: 1.02rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent-deep);
+}
+
+.hero-verse p {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.6rem;
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.28;
+  color: #4f4a42;
+}
+
+.closing-verse {
+  text-align: center;
+}
+
 .hero-actions {
   margin-top: 24px;
 }
