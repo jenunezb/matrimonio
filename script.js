@@ -53,22 +53,17 @@ const backgroundAudio = document.querySelector("#bg-audio");
 if (backgroundAudio) {
   backgroundAudio.volume = 0.85;
 
-  const tryPlayAudio = () => {
-    backgroundAudio.play().catch(() => {});
-  };
-
-  tryPlayAudio();
+  const tryPlayAudio = () =>
+    backgroundAudio.play().then(() => true).catch(() => false);
 
   const unlockAudio = () => {
     tryPlayAudio();
-    document.removeEventListener("click", unlockAudio);
-    document.removeEventListener("touchstart", unlockAudio);
-    document.removeEventListener("keydown", unlockAudio);
   };
 
-  document.addEventListener("click", unlockAudio, { passive: true });
-  document.addEventListener("touchstart", unlockAudio, { passive: true });
-  document.addEventListener("keydown", unlockAudio);
+  document.addEventListener("pointerdown", unlockAudio, { passive: true, once: true });
+  document.addEventListener("touchstart", unlockAudio, { passive: true, once: true });
+  document.addEventListener("click", unlockAudio, { passive: true, once: true });
+  document.addEventListener("keydown", unlockAudio, { once: true });
 }
 
 const memoriesCard = document.querySelector('.memories-card');
