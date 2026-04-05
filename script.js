@@ -107,4 +107,94 @@ const revealObserver = new IntersectionObserver(
 
 revealElements.forEach((element) => revealObserver.observe(element));
 
+const memoryPhotos = Array.from(document.querySelectorAll(".memory-photo"));
+const lightbox = document.querySelector("#photo-lightbox");
+const lightboxImage = document.querySelector("#lightbox-image");
+const lightboxCloseControls = document.querySelectorAll("[data-lightbox-close]");
+const lightboxPrev = document.querySelector("[data-lightbox-prev]");
+const lightboxNext = document.querySelector("[data-lightbox-next]");
+
+if (memoryPhotos.length && lightbox && lightboxImage && lightboxPrev && lightboxNext) {
+  let activeIndex = 0;
+  let lastTrigger = null;
+
+  const updateLightboxImage = () => {
+    const selectedImage = memoryPhotos[activeIndex]?.querySelector("img");
+
+    if (!selectedImage) {
+      return;
+    }
+
+    lightboxImage.src = selectedImage.currentSrc || selectedImage.src;
+    lightboxImage.alt = selectedImage.alt;
+  };
+
+  const openLightbox = (index) => {
+    activeIndex = index;
+    lastTrigger = memoryPhotos[index] || null;
+    updateLightboxImage();
+    lightbox.classList.add("is-open");
+    lightbox.setAttribute("aria-hidden", "false");
+    document.body.classList.add("lightbox-open");
+    lightboxCloseControls[0]?.focus();
+  };
+
+  const closeLightbox = () => {
+    lightbox.classList.remove("is-open");
+    lightbox.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("lightbox-open");
+    lightboxImage.src = "";
+    lastTrigger?.focus();
+  };
+
+  const showNextImage = () => {
+    activeIndex = (activeIndex + 1) % memoryPhotos.length;
+    updateLightboxImage();
+  };
+
+  const showPreviousImage = () => {
+    activeIndex = (activeIndex - 1 + memoryPhotos.length) % memoryPhotos.length;
+    updateLightboxImage();
+  };
+
+  memoryPhotos.forEach((photo, index) => {
+    photo.tabIndex = 0;
+    photo.setAttribute("role", "button");
+    photo.setAttribute("aria-label", `Abrir foto ${index + 1} en grande`);
+
+    photo.addEventListener("click", () => openLightbox(index));
+    photo.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openLightbox(index);
+      }
+    });
+  });
+
+  lightboxCloseControls.forEach((control) => {
+    control.addEventListener("click", closeLightbox);
+  });
+
+  lightboxNext.addEventListener("click", showNextImage);
+  lightboxPrev.addEventListener("click", showPreviousImage);
+
+  document.addEventListener("keydown", (event) => {
+    if (!lightbox.classList.contains("is-open")) {
+      return;
+    }
+
+    if (event.key === "Escape") {
+      closeLightbox();
+    }
+
+    if (event.key === "ArrowRight") {
+      showNextImage();
+    }
+
+    if (event.key === "ArrowLeft") {
+      showPreviousImage();
+    }
+  });
+}
+
 
